@@ -1,13 +1,16 @@
-// src/components/PrivateRoute.jsx
+import React from 'react';
+import { Navigate } from 'react-router-dom';
 
-import { Navigate } from 'react-router-dom';  // Only import Navigate
+const PrivateRoute = ({ children }) => {
+  const token = localStorage.getItem('token');
 
-// This component will protect your routes
-const PrivateRoute = ({ element, ...rest }) => {
-  const token = localStorage.getItem('token'); // Check if there's a token in localStorage
+  // If no token, redirect to login page
+  if (!token) {
+    return <Navigate to="/auth" replace />;
+  }
 
-  // If no token, redirect to login page (AuthPage), else render the element (protected route)
-  return token ? element : <Navigate to="/auth" />;
+  // Otherwise, allow access to the route
+  return children;
 };
 
 export default PrivateRoute;

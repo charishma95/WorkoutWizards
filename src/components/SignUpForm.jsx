@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate for redirection
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 
 const SignUpForm = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');  // To store error messages
-  const [successMessage, setSuccessMessage] = useState('');  // To store success messages
-  const navigate = useNavigate();  // useNavigate hook to handle redirection
+  const [errorMessage, setErrorMessage] = useState(''); // To store error messages
+  const [successMessage, setSuccessMessage] = useState(''); // To store success messages
+  const navigate = useNavigate(); // useNavigate hook to handle redirection
 
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
@@ -25,7 +25,10 @@ const SignUpForm = () => {
       console.log('Sign-up successful:', response.data);
       setSuccessMessage('User registered successfully! Redirecting to login...');
       
-      // Redirect to the login page or dashboard after successful sign-up
+      // Save the JWT token (if needed for later requests)
+      localStorage.setItem('authToken', response.data.token);
+
+      // Redirect to the dashboard or login page after successful sign-up
       setTimeout(() => {
         navigate('/dashboard');  // Redirect to dashboard after 2 seconds (optional)
       }, 2000);
